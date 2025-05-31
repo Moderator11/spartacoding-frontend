@@ -28,6 +28,13 @@ export const TodoForm = ({
     initForm();
   };
 
+  const isPastDeadline = (dateStr: string) => {
+    const selectedDate = new Date(dateStr);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Strip time part for accurate date comparison
+    return selectedDate < today;
+  };
+
   return (
     <>
       <TextField
@@ -37,6 +44,7 @@ export const TodoForm = ({
         value={todo}
         onChange={(e) => updateTodo(e.target.value)}
         style={{ marginBottom: '1rem' }}
+        disabled={isPastDeadline(deadline)}
       />
       <TextField
         label="Deadline"

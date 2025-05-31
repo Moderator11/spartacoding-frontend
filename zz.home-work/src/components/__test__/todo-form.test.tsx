@@ -14,4 +14,35 @@ describe('Integration Test', () => {
     fireEvent.change(deadlineInput, { target: { value: '2024-12-31' } });
     expect(submitButton).not.toBeDisabled();
   });
+
+  it('User cannot write more than 100 characters', () => {
+    render(<TodoForm todos={[]} setTodos={vi.fn()} />);
+    const todoInput = screen.getByLabelText(/New Todo/i);
+    const deadlineInput = screen.getByLabelText('Deadline');
+
+    expect(todoInput).not.toBeDisabled();
+    fireEvent.change(todoInput, {
+      target: {
+        value:
+          '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+      },
+    });
+    fireEvent.change(deadlineInput, { target: { value: '2029-11-29' } });
+    expect(todoInput).toBeDisabled();
+  });
+
+  it('User cannot write if dead line is in the past', () => {
+    render(<TodoForm todos={[]} setTodos={vi.fn()} />);
+    const todoInput = screen.getByLabelText(/New Todo/i);
+    const deadlineInput = screen.getByLabelText('Deadline');
+
+    expect(todoInput).not.toBeDisabled();
+    fireEvent.change(todoInput, {
+      target: {
+        value: 'Nothing',
+      },
+    });
+    fireEvent.change(deadlineInput, { target: { value: '2024-12-31' } });
+    expect(todoInput).toBeDisabled();
+  });
 });

@@ -2,7 +2,9 @@
 name: Moderator11-ci
 
 # 워크플로우를 실행시키는 event
-on: [pull_request]
+on:
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
   # 의존성 설치

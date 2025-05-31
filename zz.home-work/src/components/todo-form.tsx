@@ -42,7 +42,11 @@ export const TodoForm = ({
         variant="outlined"
         fullWidth
         value={todo}
-        onChange={(e) => updateTodo(e.target.value)}
+        onChange={(e) => {
+          if (e.target.value.length <= 100) {
+            updateTodo(e.target.value);
+          }
+        }}
         style={{ marginBottom: '1rem' }}
         disabled={isPastDeadline(deadline)}
       />

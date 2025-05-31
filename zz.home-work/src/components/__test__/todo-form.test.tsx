@@ -20,15 +20,14 @@ describe('Integration Test', () => {
     const todoInput = screen.getByLabelText(/New Todo/i);
     const deadlineInput = screen.getByLabelText('Deadline');
 
-    expect(todoInput).not.toBeDisabled();
     fireEvent.change(todoInput, {
       target: {
         value:
-          '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+          '10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
       },
     });
     fireEvent.change(deadlineInput, { target: { value: '2029-11-29' } });
-    expect(todoInput).toBeDisabled();
+    expect(todoInput.value).toBe('');
   });
 
   it('User cannot write if dead line is in the past', () => {
